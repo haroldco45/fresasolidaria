@@ -312,7 +312,7 @@ footer b{color:var(--berry)}
 </section>
 
 <!-- PRODUCTS -->
-<div class="section-title"><h2>Elige tu caja 🧺</h2><div class="deco"></div></div>
+<div class="section-title"><h2>Elige tu fresa 🍓</h2><div class="deco"></div></div>
 <section class="products" id="products"></section>
 
 <!-- STORY -->
@@ -331,6 +331,9 @@ footer b{color:var(--berry)}
 </section>
 
 <footer>
+  📞 <b>Líneas de pedido (WhatsApp)</b><br>
+  Al por menor (Tuluá): <b>315 600 6120</b><br>
+  Al por mayor (Valle y Quindío): <b>317 539 4745</b><br><br>
   🍓 <b>Reto Fresa Solidaria Barragán</b> · Consumo local · Apoyo al campo<br>
   Desarrollada por <b>Vibras Positivas HM</b> — Derechos de Autor Reservados
 </footer>
@@ -385,15 +388,19 @@ footer b{color:var(--berry)}
 
 <script>
 /* ====== CONFIG ====== */
-const WHATSAPP = "3188312581"; // ← Cambia por el número de la familia productora
+// Pedidos al por MENOR (mismo municipio - Tuluá)
+const WHATSAPP_MENOR = "573156006120";
+// Pedidos al por MAYOR (Valle del Cauca y Quindío)
+const WHATSAPP_MAYOR = "573175394745";
 const META_KG = 1800;
 const SUBS_DAYS = 10; // días de vigencia de la campaña
 
 const PRODUCTS = [
-  {id:1, emoji:"🍓", name:"Caja 1 kg", desc:"Fresa fresca recién cosechada. Ideal para probar.", price:8000, kg:1, pill:"Popular"},
-  {id:2, emoji:"🧺", name:"Caja 2 kg", desc:"Para la familia. Mejor precio por kilo.", price:15000, kg:2, pill:""},
-  {id:3, emoji:"📦", name:"Caja 5 kg", desc:"Para compartir, congelar o hacer pulpa y mermelada.", price:34000, kg:5, pill:"Ahorra más"},
-  {id:4, emoji:"🏪", name:"Pedido mayorista", desc:"Negocios: volumen y precio especial. Coordinamos por WhatsApp.", price:0, kg:0, pill:"Negocios"}
+  {id:1, emoji:"🍓", name:"Fresa de primera", desc:"Calidad premium: fruta grande, firme y uniforme. Por kilo.", price:15000, kg:1, pill:"Premium"},
+  {id:2, emoji:"🍓", name:"Fresa de segunda", desc:"Excelente calidad para mesa y consumo diario. Por kilo.", price:13000, kg:1, pill:""},
+  {id:3, emoji:"🍓", name:"Fresa de tercera", desc:"Ideal para jugos, postres y repostería. Por kilo.", price:11000, kg:1, pill:""},
+  {id:4, emoji:"🫙", name:"Fresa madura · varios calibres", desc:"Perfecta para pulpa, mermelada y conservas. Por kilo.", price:9000, kg:1, pill:"Mejor precio"},
+  {id:5, emoji:"🏪", name:"Pedido mayorista", desc:"Negocios: volumen y precio especial. Coordinamos por WhatsApp.", price:0, kg:0, pill:"Negocios"}
 ];
 
 /* ====== CART ====== */
@@ -514,7 +521,11 @@ function sendOrder(){
   if(notes) msg += `📝 *Notas:* ${notes}%0A`;
   msg += `%0A_Pedido enviado desde la app Fresa Solidaria_`;
 
-  window.open(`https://wa.me/${WHATSAPP}?text=${msg}`,'_blank');
+  // Si el pedido incluye "Pedido mayorista" (id 5) → línea mayoristas, si no → menor
+  const esMayorista = !!cart[5];
+  const numero = esMayorista ? WHATSAPP_MAYOR : WHATSAPP_MENOR;
+
+  window.open(`https://wa.me/${numero}?text=${msg}`,'_blank');
   closeDrawer();
   document.getElementById('success').classList.add('show');
 }
@@ -533,7 +544,7 @@ function resetAll(){
 document.getElementById('aliadoBtn').onclick=(e)=>{
   e.preventDefault();
   const msg=`🏅 *QUIERO SER ALIADO FRESA SOLIDARIA*%0A%0AHola, tengo un negocio interesado en comprar fresa al por mayor. Me gustaría conocer precios y condiciones.`;
-  window.open(`https://wa.me/${WHATSAPP}?text=${msg}`,'_blank');
+  window.open(`https://wa.me/${WHATSAPP_MAYOR}?text=${msg}`,'_blank');
 };
 
 /* ====== GOAL COUNTER (demo, editable) ====== */
@@ -568,4 +579,3 @@ if('serviceWorker' in navigator){
 </script>
 </body>
 </html>
-
